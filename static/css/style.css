@@ -1,0 +1,8 @@
+body {
+    font-family: 'Inter', sans-serif;
+}
+
+table th, table td {
+    text-align: left;
+    padding: 10px;
+}

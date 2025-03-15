@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Housekeepers List{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Housekeepers List</h1>
+    <a href="{% url 'housekeeper-create' %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 mb-6 inline-block">
+        Add New Housekeeper
+    </a>
+    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+        <table class="min-w-full">
+            <thead class="bg-gray-50">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">User</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hostel</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Block</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Wing</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200">
+                {% for housekeeper in housekeepers %}
+                <tr class="hover:bg-gray-50">
+                    <td class="px-6 py-4">{{ housekeeper.user.username }}</td>
+                    <td class="px-6 py-4">{{ housekeeper.hostel.name }}</td>
+                    <td class="px-6 py-4">{{ housekeeper.block.name }}</td>
+                    <td class="px-6 py-4">{{ housekeeper.wing.name }}</td>
+                    <td class="px-6 py-4 space-x-2">
+                        <a href="{% url 'housekeeper-detail' housekeeper.pk %}" class="text-blue-600 hover:text-blue-800">View</a>
+                        <a href="{% url 'housekeeper-update' housekeeper.pk %}" class="text-green-600 hover:text-green-800">Edit</a>
+                        <a href="{% url 'housekeeper-delete' housekeeper.pk %}" class="text-red-600 hover:text-red-800">Delete</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

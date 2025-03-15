@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Delete CheckIn{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Delete CheckIn</h1>
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <p class="text-lg">Are you sure you want to delete the check-in for <strong>{{ checkin.student.username }}</strong>?</p>
+        <form method="post" class="mt-6">
+            {% csrf_token %}
+            <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Yes, Delete</button>
+            <a href="{% url 'checkin-list' %}" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Cancel</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

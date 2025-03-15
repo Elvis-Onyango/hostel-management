@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ room.number }} Details{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">{{ room.number }} Details</h1>
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <div class="space-y-4">
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Hostel</label>
+                <p class="mt-1 text-lg">{{ room.hostel.name }}</p>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Block</label>
+                <p class="mt-1 text-lg">{{ room.block.name }}</p>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Wing</label>
+                <p class="mt-1 text-lg">{{ room.wing.name }}</p>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Room Number</label>
+                <p class="mt-1 text-lg">{{ room.number }}</p>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Capacity</label>
+                <p class="mt-1 text-lg">{{ room.capacity }}</p>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Occupied</label>
+                <p class="mt-1 text-lg">{{ room.occupied }}</p>
+            </div>
+            <div>
+                <label class="block text-sm font-medium text-gray-700">Room Type</label>
+                <p class="mt-1 text-lg">{{ room.get_room_type_display }}</p>
+            </div>
+        </div>
+        <div class="mt-6">
+            <a href="{% url 'room-update' room.pk %}" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Edit</a>
+            <a href="{% url 'room-delete' room.pk %}" class="ml-2 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700">Delete</a>
+            <a href="{% url 'room-list' %}" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Back to List</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

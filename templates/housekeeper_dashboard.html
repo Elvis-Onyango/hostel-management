@@ -1,0 +1,229 @@
+{% extends 'base.html' %}
+
+{% block title %}Housekeeper Dashboard{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen">
+    <!-- Sidebar Toggle Button (Mobile) -->
+    <button id="sidebarToggle" class="fixed lg:hidden p-4 bg-blue-800 text-white z-50">
+        ☰
+    </button>
+
+    <!-- Sidebar -->
+    <div id="sidebar" class="bg-blue-800 text-white w-64 p-6 fixed lg:relative h-screen lg:h-auto transform -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-in-out z-40">
+        <h2 class="text-2xl font-bold mb-6">🏠 Hostel Manager</h2>
+        <nav>
+            <ul class="space-y-4">
+                <li>
+                    <a href="{% url 'hostel-list' %}" class="flex items-center p-2 hover:bg-blue-700 rounded-lg">
+                        🏠 Hostels
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'block-list' %}" class="flex items-center p-2 hover:bg-blue-700 rounded-lg">
+                        🏢 Blocks
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'wing-list' %}" class="flex items-center p-2 hover:bg-blue-700 rounded-lg">
+                        🏘️ Wings
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'room-list' %}" class="flex items-center p-2 hover:bg-blue-700 rounded-lg">
+                        🛏️ Rooms
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'student-list' %}" class="flex items-center p-2 hover:bg-blue-700 rounded-lg">
+                        🎓 Students
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'housekeeper-list' %}" class="flex items-center p-2 hover:bg-blue-700 rounded-lg">
+                        🧹 Housekeepers
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'checkin-list' %}" class="flex items-center p-2 hover:bg-blue-700 rounded-lg">
+                        ✅ CheckIns
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'complaint-list' %}" class="flex items-center p-2 hover:bg-blue-700 rounded-lg">
+                        📝 Complaints
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'emergency-list' %}" class="flex items-center p-2 hover:bg-blue-700 rounded-lg">
+                        🚨 Emergencies
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 bg-gray-100 p-8 lg:ml-64">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold">Housekeeper Dashboard</h1>
+            <!-- Notifications Dropdown -->
+            <div class="relative">
+                <button id="notificationsButton" class="bg-white p-2 rounded-full hover:bg-gray-200">
+                    🔔
+                    <span class="absolute top-0 right-0 bg-red-600 text-white text-xs rounded-full px-1">3</span>
+                </button>
+                <div id="notificationsDropdown" class="hidden absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-md">
+                    <div class="p-4">
+                        <p class="text-gray-700">New complaint submitted by <strong>John Doe</strong></p>
+                        <p class="text-sm text-gray-500">2 hours ago</p>
+                    </div>
+                    <div class="p-4 border-t">
+                        <p class="text-gray-700">Room 101 checked in by <strong>Jane Smith</strong></p>
+                        <p class="text-sm text-gray-500">5 hours ago</p>
+                    </div>
+                    <div class="p-4 border-t">
+                        <p class="text-gray-700">Emergency reported in <strong>Block A</strong></p>
+                        <p class="text-sm text-gray-500">1 day ago</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cards Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <!-- Students Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Students</h3>
+                <p class="text-2xl font-bold">{{ students_count }}</p>
+                <a href="{% url 'student-list' %}" class="text-blue-600 hover:text-blue-800 mt-2 inline-block">View All</a>
+            </div>
+            <!-- Hostels Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Hostels</h3>
+                <p class="text-2xl font-bold">{{ hostels_count }}</p>
+                <a href="{% url 'hostel-list' %}" class="text-blue-600 hover:text-blue-800 mt-2 inline-block">View All</a>
+            </div>
+            <!-- Complaints Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Complaints</h3>
+                <p class="text-2xl font-bold">{{ complaints_count }}</p>
+                <a href="{% url 'complaint-list' %}" class="text-blue-600 hover:text-blue-800 mt-2 inline-block">View All</a>
+            </div>
+            <!-- Emergencies Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Emergencies</h3>
+                <p class="text-2xl font-bold">{{ emergencies_count }}</p>
+                <a href="{% url 'emergency-list' %}" class="text-blue-600 hover:text-blue-800 mt-2 inline-block">View All</a>
+            </div>
+            <!-- Wings Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Wings</h3>
+                <p class="text-2xl font-bold">{{ wings_count }}</p>
+                <a href="{% url 'wing-list' %}" class="text-blue-600 hover:text-blue-800 mt-2 inline-block">View All</a>
+            </div>
+            <!-- Blocks Card -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h3 class="text-xl font-semibold mb-4">Blocks</h3>
+                <p class="text-2xl font-bold">{{ blocks_count }}</p>
+                <a href="{% url 'block-list' %}" class="text-blue-600 hover:text-blue-800 mt-2 inline-block">View All</a>
+            </div>
+        </div>
+
+        <!-- Check-In Form -->
+        <div class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-2xl font-bold mb-6">Check-In Student</h2>
+            <form method="post" action="{% url 'checkin-create' %}">
+                {% csrf_token %}
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="student" class="block text-sm font-medium text-gray-700">Student</label>
+                        <select name="student" id="student" class="mt-1 block w-full p-2 border border-gray-300 rounded-lg">
+                            {% for student in students %}
+                                <option value="{{ student.id }}">{{ student.user.username }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="room" class="block text-sm font-medium text-gray-700">Room</label>
+                        <select name="room" id="room" class="mt-1 block w-full p-2 border border-gray-300 rounded-lg">
+                            {% for room in rooms %}
+                                <option value="{{ room.id }}">{{ room.number }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Check-In</button>
+            </form>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Complaints Chart -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Complaints by Status</h2>
+                <canvas id="complaintsChart"></canvas>
+            </div>
+            <!-- Room Occupancy Chart -->
+            <div class="bg-white p-6 rounded-lg shadow-md">
+                <h2 class="text-xl font-semibold mb-4">Room Occupancy</h2>
+                <canvas id="roomOccupancyChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Toggle Sidebar (Mobile)
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebar = document.getElementById('sidebar');
+    sidebarToggle.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full');
+    });
+
+    // Toggle Notifications Dropdown
+    const notificationsButton = document.getElementById('notificationsButton');
+    const notificationsDropdown = document.getElementById('notificationsDropdown');
+    notificationsButton.addEventListener('click', () => {
+        notificationsDropdown.classList.toggle('hidden');
+    });
+
+    // Complaints Chart
+    const complaintsCtx = document.getElementById('complaintsChart').getContext('2d');
+    new Chart(complaintsCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Pending', 'Resolved'],
+            datasets: [{
+                label: 'Complaints',
+                data: [{{ pending_complaints_count }}, {{ resolved_complaints_count }}],
+                backgroundColor: ['#EF4444', '#10B981'],
+            }]
+        },
+    });
+
+    // Room Occupancy Chart
+    const roomOccupancyCtx = document.getElementById('roomOccupancyChart').getContext('2d');
+    new Chart(roomOccupancyCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ hostel_names|safe }},
+            datasets: [{
+                label: 'Occupied Rooms',
+                data: {{ hostel_occupancy|safe }},
+                backgroundColor: '#3B82F6',
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

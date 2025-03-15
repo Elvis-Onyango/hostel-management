@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Emergency List{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Emergency List</h1>
+    {% if emergencies %}
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <table class="min-w-full">
+                <thead>
+                    <tr>
+                        <th class="text-left">Student</th>
+                        <th class="text-left">Emergency Type</th>
+                        <th class="text-left">Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for emergency in emergencies %}
+                        <tr class="border-t">
+                            <td class="py-2">{{ emergency.student.user.username }}</td>
+                            <td class="py-2">{{ emergency.emergency_type }}</td>
+                            <td class="py-2">{{ emergency.details }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <p class="text-gray-700">No emergencies found.</p>
+    {% endif %}
+</div>
+{% endblock %}

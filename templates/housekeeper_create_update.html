@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}Update Housekeeper{% else %}Create Housekeeper{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">
+        {% if form.instance.pk %}Update Housekeeper{% else %}Create Housekeeper{% endif %}
+    </h1>
+    <form method="post" class="bg-white p-6 rounded-lg shadow-md">
+        {% csrf_token %}
+        <div class="space-y-4">
+            <!-- User Field -->
+            <div>
+                <label for="{{ form.user.id_for_label }}" class="block text-sm font-medium text-gray-700">User</label>
+                {{ form.user }}
+                {% if form.user.errors %}
+                    <p class="text-sm text-red-600">{{ form.user.errors }}</p>
+                {% endif %}
+            </div>
+            <!-- Hostel Field -->
+            <div>
+                <label for="{{ form.hostel.id_for_label }}" class="block text-sm font-medium text-gray-700">Hostel</label>
+                {{ form.hostel }}
+                {% if form.hostel.errors %}
+                    <p class="text-sm text-red-600">{{ form.hostel.errors }}</p>
+                {% endif %}
+            </div>
+            <!-- Block Field -->
+            <div>
+                <label for="{{ form.block.id_for_label }}" class="block text-sm font-medium text-gray-700">Block</label>
+                {{ form.block }}
+                {% if form.block.errors %}
+                    <p class="text-sm text-red-600">{{ form.block.errors }}</p>
+                {% endif %}
+            </div>
+            <!-- Wing Field -->
+            <div>
+                <label for="{{ form.wing.id_for_label }}" class="block text-sm font-medium text-gray-700">Wing</label>
+                {{ form.wing }}
+                {% if form.wing.errors %}
+                    <p class="text-sm text-red-600">{{ form.wing.errors }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="mt-6">
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                {% if form.instance.pk %}Update{% else %}Create{% endif %}
+            </button>
+            <a href="{% url 'housekeeper-list' %}" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

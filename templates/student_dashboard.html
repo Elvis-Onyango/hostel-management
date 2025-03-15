@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Dashboard{% endblock %}
+
+{% block content %}
+<div class="flex min-h-screen">
+    <!-- Sidebar -->
+    <div class="bg-blue-800 text-white w-64 p-6">
+        <h2 class="text-2xl font-bold mb-6">🎓 Student Portal</h2>
+        <nav>
+            <ul class="space-y-4">
+                <li>
+                    <a href="#room-details" class="flex items-center p-2 hover:bg-blue-700 rounded-lg">
+                        🛏️ Room Details
+                    </a>
+                </li>
+                <li>
+                    <a href="#checkin-status" class="flex items-center p-2 hover:bg-blue-700 rounded-lg">
+                        ✅ Check-In Status
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'complaint-create' %}" class="flex items-center p-2 hover:bg-blue-700 rounded-lg">
+                        📝 Complaints
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'emergency-create' %}" class="flex items-center p-2 hover:bg-blue-700 rounded-lg">
+                        🚨 Emergencies
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 bg-gray-100 p-8">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
+            <h1 class="text-3xl font-bold">Welcome, {{ student.user.username }}</h1>
+        </div>
+
+        <!-- Room Details -->
+        <div id="room-details" class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-2xl font-bold mb-6">Room Details</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Hostel</label>
+                    <p class="mt-1 text-lg">{{ student.hostel.name }}</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Room Number</label>
+                    <p class="mt-1 text-lg">{{ student.room.number }}</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Room Type</label>
+                    <p class="mt-1 text-lg">{{ student.room.get_room_type_display }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Check-In Status -->
+        <div id="checkin-status" class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-2xl font-bold mb-6">Check-In Status</h2>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Status</label>
+                    <p class="mt-1 text-lg">{{ checkin_status|yesno:"Checked In,Not Checked In" }}</p>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Last Check-In</label>
+                    <p class="mt-1 text-lg">{{ last_checkin.timestamp|default:"N/A" }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Complaints Section -->
+        <div id="complaints" class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-2xl font-bold mb-6">Complaints</h2>
+            <!-- Complaints List -->
+            <div class="space-y-4">
+                {% for complaint in complaints %}
+                <div class="p-4 bg-gray-50 rounded-lg">
+                    <p class="text-gray-700">{{ complaint.description }}</p>
+                    <p class="text-sm text-gray-500">Status: {{ complaint.get_status_display }}</p>
+                    <p class="text-sm text-gray-500">Submitted on: {{ complaint.timestamp }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Emergencies Section -->
+        <div id="emergencies" class="bg-white p-6 rounded-lg shadow-md mb-8">
+            <h2 class="text-2xl font-bold mb-6">Emergencies</h2>
+            <!-- Emergencies List -->
+            <div class="space-y-4">
+                {% for emergency in emergencies %}
+                <div class="p-4 bg-gray-50 rounded-lg">
+                    <p class="text-gray-700">{{ emergency.emergency_type|title }}: {{ emergency.details }}</p>
+                    <p class="text-sm text-gray-500">Reported on: {{ emergency.timestamp }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Analytics Section -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold mb-6">Analytics</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Complaints Chart -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Complaints Status</h3>
+                    <canvas id="complaintsChart"></canvas>
+                </div>
+                <!-- Emergencies Chart -->
+                <div>
+                    <h3 class="text-xl font-semibold mb-4">Emergencies by Type</h3>
+                    <canvas id="emergenciesChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js Script -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // Complaints Chart
+    const complaintsCtx = document.getElementById('complaintsChart').getContext('2d');
+    new Chart(complaintsCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Pending', 'Resolved'],
+            datasets: [{
+                label: 'Complaints',
+                data: [{{ pending_complaints_count }}, {{ resolved_complaints_count }}],
+                backgroundColor: ['#EF4444', '#10B981'],
+            }]
+        },
+    });
+
+    // Emergencies Chart
+    const emergenciesCtx = document.getElementById('emergenciesChart').getContext('2d');
+    new Chart(emergenciesCtx, {
+        type: 'bar',
+        data: {
+            labels: {{ emergency_types|safe }},
+            datasets: [{
+                label: 'Emergencies',
+                data: {{ emergency_counts|safe }},
+                backgroundColor: '#3B82F6',
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

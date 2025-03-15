@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}Update Hostel{% else %}Create Hostel{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">
+        {% if form.instance.pk %}Update Hostel{% else %}Create Hostel{% endif %}
+    </h1>
+    <form method="post" class="bg-white p-6 rounded-lg shadow-md">
+        {% csrf_token %}
+        <div class="space-y-4">
+            <!-- Name Field -->
+            <div>
+                <label for="{{ form.name.id_for_label }}" class="block text-sm font-medium text-gray-700">Name</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                    <p class="text-sm text-red-600">{{ form.name.errors }}</p>
+                {% endif %}
+            </div>
+            <!-- Has Blocks Field -->
+            <div>
+                <label for="{{ form.has_blocks.id_for_label }}" class="block text-sm font-medium text-gray-700">Has Blocks</label>
+                {{ form.has_blocks }}
+                {% if form.has_blocks.errors %}
+                    <p class="text-sm text-red-600">{{ form.has_blocks.errors }}</p>
+                {% endif %}
+            </div>
+            <!-- Has Wings Field -->
+            <div>
+                <label for="{{ form.has_wings.id_for_label }}" class="block text-sm font-medium text-gray-700">Has Wings</label>
+                {{ form.has_wings }}
+                {% if form.has_wings.errors %}
+                    <p class="text-sm text-red-600">{{ form.has_wings.errors }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="mt-6">
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                {% if form.instance.pk %}Update{% else %}Create{% endif %}
+            </button>
+            <a href="{% url 'hostel-list' %}" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Update Complaint Status{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">Update Complaint Status</h1>
+    <form method="post" class="bg-white p-6 rounded-lg shadow-md">
+        {% csrf_token %}
+        <div class="space-y-4">
+            <!-- Status Field -->
+            <div>
+                <label for="{{ form.status.id_for_label }}" class="block text-sm font-medium text-gray-700">Status</label>
+                {{ form.status }}
+                {% if form.status.errors %}
+                    <p class="text-sm text-red-600 mt-1">{{ form.status.errors }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="mt-6">
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Update Status</button>
+            <a href="{% url 'complaint-list' %}" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block title %}Welcome to Hostel Manager{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="bg-blue-600 text-white py-20">
+    <div class="container mx-auto text-center">
+        <h1 class="text-5xl font-bold mb-4">Welcome to Hostel Manager</h1>
+        <p class="text-xl mb-8">Efficiently manage hostels, rooms, students, and more with our powerful system.</p>
+        <a href="{% url 'hostel-list' %}" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition duration-300">
+            Get Started
+        </a>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="container mx-auto my-16">
+    <h2 class="text-3xl font-bold text-center mb-12">Key Features</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-white p-6 rounded-lg shadow-md text-center">
+            <div class="text-4xl mb-4">🏠</div>
+            <h3 class="text-xl font-semibold mb-2">Hostel Management</h3>
+            <p class="text-gray-600">Easily manage multiple hostels, blocks, and wings with detailed tracking.</p>
+        </div>
+        <!-- Feature 2 -->
+        <div class="bg-white p-6 rounded-lg shadow-md text-center">
+            <div class="text-4xl mb-4">🛏️</div>
+            <h3 class="text-xl font-semibold mb-2">Room Allocation</h3>
+            <p class="text-gray-600">Assign rooms to students and track occupancy in real-time.</p>
+        </div>
+        <!-- Feature 3 -->
+        <div class="bg-white p-6 rounded-lg shadow-md text-center">
+            <div class="text-4xl mb-4">📝</div>
+            <h3 class="text-xl font-semibold mb-2">Complaint Handling</h3>
+            <p class="text-gray-600">Efficiently manage and resolve student complaints and emergencies.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Call to Action Section -->
+<div class="bg-gray-800 text-white py-16">
+    <div class="container mx-auto text-center">
+        <h2 class="text-3xl font-bold mb-4">Ready to Get Started?</h2>
+        <p class="text-xl mb-8">Join thousands of institutions using Hostel Manager to streamline their operations.</p>
+        <a href="{% url 'hostel-list' %}" class="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+            Explore Hostels
+        </a>
+    </div>
+</div>
+
+<!-- Testimonials Section -->
+<div class="container mx-auto my-16">
+    <h2 class="text-3xl font-bold text-center mb-12">What Our Users Say</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- Testimonial 1 -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <p class="text-gray-600 mb-4">"Hostel Manager has made managing our hostels so much easier. The system is intuitive and saves us a lot of time!"</p>
+            <div class="flex items-center">
+                <div class="w-12 h-12 bg-gray-300 rounded-full mr-4"></div>
+                <div>
+                    <h4 class="font-semibold">Eyleen Sang</h4>
+                    <p class="text-sm text-gray-500">Hostel Administrator</p>
+                </div>
+            </div>
+        </div>
+        <!-- Testimonial 2 -->
+        <div class="bg-white p-6 rounded-lg shadow-md">
+            <p class="text-gray-600 mb-4">"The room allocation feature is fantastic. It’s so easy to assign rooms and track availability."</p>
+            <div class="flex items-center">
+                <div class="w-12 h-12 bg-gray-300 rounded-full mr-4"></div>
+                <div>
+                    <h4 class="font-semibold">Juddith Akinyi</h4>
+                    <p class="text-sm text-gray-500">Student Affairs Officer</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Footer Section (already in base template) -->
+{% endblock %}

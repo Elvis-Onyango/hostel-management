@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {% if form.instance.pk %}Update CheckIn{% else %}Create CheckIn{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6">
+        {% if form.instance.pk %}Update CheckIn{% else %}Create CheckIn{% endif %}
+    </h1>
+    <form method="post" class="bg-white p-6 rounded-lg shadow-md">
+        {% csrf_token %}
+        <div class="space-y-4">
+            <!-- Student Field -->
+            <div>
+                <label for="{{ form.student.id_for_label }}" class="block text-sm font-medium text-gray-700">Student</label>
+                {{ form.student }}
+                {% if form.student.errors %}
+                    <p class="text-sm text-red-600">{{ form.student.errors }}</p>
+                {% endif %}
+            </div>
+            <!-- Room Field -->
+            <div>
+                <label for="{{ form.room.id_for_label }}" class="block text-sm font-medium text-gray-700">Room</label>
+                {{ form.room }}
+                {% if form.room.errors %}
+                    <p class="text-sm text-red-600">{{ form.room.errors }}</p>
+                {% endif %}
+            </div>
+            <!-- Checked In Field -->
+            <div>
+                <label for="{{ form.checked_in.id_for_label }}" class="block text-sm font-medium text-gray-700">Checked In</label>
+                {{ form.checked_in }}
+                {% if form.checked_in.errors %}
+                    <p class="text-sm text-red-600">{{ form.checked_in.errors }}</p>
+                {% endif %}
+            </div>
+        </div>
+        <div class="mt-6">
+            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                {% if form.instance.pk %}Update{% else %}Create{% endif %}
+            </button>
+            <a href="{% url 'checkin-list' %}" class="ml-2 bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600">Cancel</a>
+        </div>
+    </form>
+</div>
+{% endblock %}
